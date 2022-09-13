@@ -1,0 +1,35 @@
+.sidebar {
+    height: 100vh;
+    background-color: darkgrey;
+    width:  70px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 0 8px 0;
+}
+
+.sidebar > .sidebarLink {
+    margin: 3px 8px;
+}
+
+.sidebar.active {
+    width: 250px;
+}
+
+.menuButtonImg {
+    aspect-ratio:  1 / 1;
+    height: 26px;
+}
+
+.sidebar > div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    padding-right: 8px;
+    margin-bottom: 5px;
+}
+
+button {
+    height: fit-content;
+}

@@ -1,0 +1,15 @@
+.fullScreenContainer {
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+}
+
+.content {
+    background-color: darkgreen;
+    height: 100%;
+    width: 100%;
+    padding: 10px 20px;
+    overflow-y: auto;
+}
