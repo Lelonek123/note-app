@@ -2,6 +2,7 @@ import React from 'react';
 import style from './sideMenu.module.css';
 import showMenuIcon from './hamburgerMenu.svg';
 import closeMenuIcon from './close.svg';
+import { Link } from 'react-router-dom';
 
 export default function SideMenu(props) {
     const [active, setActive] = React.useState(false)
@@ -22,15 +23,12 @@ export default function SideMenu(props) {
                 </button>
             </div>
             <hr style={{margin: "10px 3px"}}/>
-            <a className={`btn btn-primary btn-sm ${style.sidebarLink}`}>
+            <Link to="/" className={`btn btn-primary btn-sm ${style.sidebarLink}`}>
                 Home
-            </a>
-            <a  className={`btn btn-primary btn-sm ${style.sidebarLink}`}>
+            </Link>
+            <Link to="/notes/" className={`btn btn-primary btn-sm ${style.sidebarLink}`}>
                 Your Notes
-            </a>
-            <a className={`btn btn-primary btn-sm ${style.sidebarLink}`}>
-                LogIn
-            </a>
+            </Link>
         </div>
     )
 }
