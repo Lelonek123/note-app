@@ -27,7 +27,7 @@ export default function SideMenu(props) {
                 Home
             </Link>
             <Link to="/notes/" className={`btn btn-primary btn-sm ${style.sidebarLink}`}>
-                Your Notes
+                Your Board
             </Link>
         </div>
     )
