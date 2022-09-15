@@ -7,6 +7,7 @@ export default function  NoteCard(props) {
             <div className={`card-header`}><button className="btn btn-sm btn-primary" style={{marginRight: "20px"}}>Edit</button><span>{`#${props.tags.join(" #")}`}</span></div>
             <div className={`card-body`}>
                 <div className={`card-title`} style={{fontSize: "1.2rem"}}>{props.name}</div>
+                <hr style={{margin: "0"}} />
                 <div className={`card-text`}>{props.content}</div>
             </div>
         </div>

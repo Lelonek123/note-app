@@ -13,7 +13,7 @@ export default function MainPage() {
                         <p>home</p>
                     }/>
                 <Route 
-                    path="notes/"
+                    path="notes/*"
                     element={
                         <NotesBrowser />
                     }/>
