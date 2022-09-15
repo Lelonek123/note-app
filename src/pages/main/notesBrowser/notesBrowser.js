@@ -3,44 +3,65 @@ import style from "./notesBrowser.module.css";
 import NoteCard from "./noteCard/noteCard.js";
 import SearchBar from "../../../components/searchBar/searchBar.js";
 import EditNotePanel from "./editNotePanel/editNotePanel.js";
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
 
 const backendNotes = [
     {
-        name: "Note2",
+        title: "Note2",
         content: `note 2 is containing some shit
                    like idk.`,
         tags: ["second", "note"],
     },
     {
-        name: "Note1",
+        title: "Note1",
         content: `note 1 is containing some shit
                    like idk. Cards support a wide variety of content, including images, text, list groups, links, and more. Below are examples of what’s supported.`,
-        tags: ["first", "note"],
+        tags: ["sumlongtag", "note"],
     },
     {
-        name: "Note3",
+        title: "Note3",
         content: `note 1 is containing some shit
                    like idk.`,
         tags: ["third", "note"],
     },
     {
-        name: "List",
+        title: "List",
         content: `note 1 is containing some shit
                    like idk.`,
         tags: ["third", "note"],
     },
     {
-        name: "List2",
+        title: "List2",
         content: `note 1 is containing some shit
                    like idk.`,
         tags: ["third", "note"],
     },
 ];
 
+const editorReducer = (state, action) => {
+    let newState = { ...state };
+
+    switch (action.type) {
+        case "open":
+            newState.active = true;
+            newState.note = action.note;
+            break;
+        case "close":
+            newState.active = false;
+            newState.note = {};
+            break;
+    }
+
+    return newState;
+};
+
 export default function NotesBrowser() {
     const [loading, setLoading] = React.useState(true);
     const [notes, setNotes] = React.useState();
+    const [editor, dispatchEditor] = React.useReducer(editorReducer, {
+        active: false,
+        note: {},
+    });
 
     React.useEffect(() => {
         setNotes(backendNotes);
@@ -57,10 +78,24 @@ export default function NotesBrowser() {
             setNotes(notes);
         } else {
             let notes = backendNotes.filter((note) =>
-                note.name.toLowerCase().includes(term.toLowerCase())
+                note.title.toLowerCase().includes(term.toLowerCase())
             );
             setNotes(notes);
         }
+    };
+
+    const editHandler = (noteName) => {
+        const note = notes.find((note) => note.title === noteName);
+        dispatchEditor({ type: "open", note: note });
+
+        // for (let i = 0; i < notes.length; i++) {
+        //     if (notes[i].title === noteName) {
+        //         setEditor({
+        //             active: true,
+        //             note: notes[i]
+        //         })
+        //     }
+        // }
     };
 
     return (
@@ -74,19 +109,18 @@ export default function NotesBrowser() {
                         <p>Loading</p>
                     ) : (
                         notes.map((note) => (
-                            <NoteCard {...note} key={note.name} />
+                            <NoteCard
+                                onEdit={editHandler}
+                                {...note}
+                                key={note.title}
+                            />
                         ))
                     )}
                 </div>
             </div>
-        <Routes>
-            <Route
-                path="/edit/*" 
-                element={
-                    <EditNotePanel />
-                }
-            />
-        </Routes>
+            {editor.active ? (
+                <EditNotePanel note={editor.note} onClose={dispatchEditor} />
+            ) : null}
         </div>
     );
 }
