@@ -1,6 +1,7 @@
 import React from 'react';
 import WrapperWithSideMenu from '../../components/wrapperWithSideMenu/wrapperWithSideMenu.js';
 import { Routes, Route } from 'react-router-dom';
+import NotesBrowser from './notesBrowser/notesBrowser.js'
 
 export default function MainPage() {
     return (
@@ -12,9 +13,9 @@ export default function MainPage() {
                         <p>home</p>
                     }/>
                 <Route 
-                    path="notes/"
+                    path="notes/*"
                     element={
-                        <p>browse</p>
+                        <NotesBrowser />
                     }/>
             </Routes>
         </ WrapperWithSideMenu>
