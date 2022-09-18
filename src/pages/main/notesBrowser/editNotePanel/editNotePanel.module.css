@@ -61,7 +61,7 @@
     top: -2px;
 }
 
-.removeTag {
+.addTagButton {
     display: flex;
     border-radius: 50%;
     cursor: pointer;
@@ -69,7 +69,7 @@
     justify-content: center;
 }
 
-.removeTag > svg {
+.addTagButton > svg {
     height: 26px;
     width: 26px;
 }

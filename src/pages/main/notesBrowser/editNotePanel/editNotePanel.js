@@ -5,6 +5,22 @@ export default function EditNotePanel(props) {
     const [title, setTitle] = React.useState(props.note.title);
     const [content, setContent] = React.useState(props.note.content);
     const [tags, setTags] = React.useState(props.note.tags);
+    const [addTagActive, setAddTagActive] = React.useState(false);
+
+    const removeTag = (tag) => {
+        setTags(tags.filter((t) => t != tag));
+    };
+
+    const addTagHandler = (e) => {
+        if (e.key == "Enter") {
+            let newTags = tags;
+            newTags.push(e.target.value);
+            setTags(newTags);
+            setAddTagActive(false);
+        } else if (e.key == "Escape") {
+            setAddTagActive(false);
+        }
+    };
 
     return (
         <div className={style.fullScreen}>
@@ -19,6 +35,9 @@ export default function EditNotePanel(props) {
                             <div
                                 className={`${style.removeTagButton}`}
                                 title="Remove tag"
+                                onClick={() => {
+                                    removeTag(tag);
+                                }}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +52,13 @@ export default function EditNotePanel(props) {
                             </div>
                         </div>
                     ))}
-                    <div className={style.removeTag} title="Add tag">
+                    <div
+                        className={style.addTagButton}
+                        title="Add tag"
+                        onClick={() => {
+                            setAddTagActive(true);
+                        }}
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
@@ -46,6 +71,16 @@ export default function EditNotePanel(props) {
                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                         </svg>
                     </div>
+                    {addTagActive ? (
+                        <div className={style.tagInput}>
+                            <input
+                                ref={(input) => input && input.focus()}
+                                type="text"
+                                placeholder="Tag..."
+                                onKeyDown={(e) => addTagHandler(e)}
+                            ></input>
+                        </div>
+                    ) : null}
                 </div>
                 <div
                     className="card-body"
@@ -73,10 +108,28 @@ export default function EditNotePanel(props) {
                 </div>
                 <div className="card-footer">
                     <button
-                        className="btn btn-danger"
-                        onClick={() => props.onClose({ type: "close" })}
+                        className="btn btn-primary"
+                        onClick={() => {
+                            console.log("save");
+                            props.dispatch({
+                                type: "save-and-close",
+                                note: {
+                                    id: props.key,
+                                    title: title,
+                                    content: content,
+                                    tags: tags,
+                                },
+                            });
+                        }}
+                        style={{ marginRight: "10px" }}
                     >
-                        Close
+                        Save
+                    </button>
+                    <button
+                        className="btn btn-danger"
+                        onClick={() => props.dispatch({ type: "close" })}
+                    >
+                        Discard
                     </button>
                 </div>
             </div>

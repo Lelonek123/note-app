@@ -5,43 +5,13 @@ import SearchBar from "../../../components/searchBar/searchBar.js";
 import EditNotePanel from "./editNotePanel/editNotePanel.js";
 import { Routes, Route } from "react-router-dom";
 
-const backendNotes = [
-    {
-        title: "Note2",
-        content: `note 2 is containing some shit
-                   like idk.`,
-        tags: ["second", "note"],
-    },
-    {
-        title: "Note1",
-        content: `note 1 is containing some shit
-                   like idk. Cards support a wide variety of content, including images, text, list groups, links, and more. Below are examples of what’s supported.`,
-        tags: ["sumlongtag", "note"],
-    },
-    {
-        title: "Note3",
-        content: `note 1 is containing some shit
-                   like idk.`,
-        tags: ["third", "note"],
-    },
-    {
-        title: "List",
-        content: `note 1 is containing some shit
-                   like idk.`,
-        tags: ["third", "note"],
-    },
-    {
-        title: "List2",
-        content: `note 1 is containing some shit
-                   like idk.`,
-        tags: ["third", "note"],
-    },
-];
-
 const editorReducer = (state, action) => {
     let newState = { ...state };
 
     switch (action.type) {
+        case "set-notes":
+            newState.notes = action.notes;
+            break;
         case "open":
             newState.active = true;
             newState.note = action.note;
@@ -50,6 +20,14 @@ const editorReducer = (state, action) => {
             newState.active = false;
             newState.note = {};
             break;
+        case "save-and-close":
+            newState.notes[
+                newState.notes.findIndex((n) => n.title == state.note.title)
+            ] = action.note;
+            localStorage.setItem("notes", JSON.stringify(newState.notes));
+            newState.note = {};
+            newState.active = false;
+            break;
     }
 
     return newState;
@@ -57,36 +35,41 @@ const editorReducer = (state, action) => {
 
 export default function NotesBrowser() {
     const [loading, setLoading] = React.useState(true);
-    const [notes, setNotes] = React.useState();
-    const [editor, dispatchEditor] = React.useReducer(editorReducer, {
+    const [state, dispatch] = React.useReducer(editorReducer, {
         active: false,
         note: {},
+        notes: [],
     });
 
     React.useEffect(() => {
-        setNotes(backendNotes);
+        dispatch({
+            type: "set-notes",
+            notes: JSON.parse(localStorage.getItem("notes")),
+        });
         setLoading(false);
     }, []);
 
     const SearchHandler = (term) => {
         if (term == "") {
-            setNotes(backendNotes);
+            dispatch({
+                type: "set-notes",
+                notes: JSON.parse(localStorage.getItem("notes")),
+            });
         } else if (term[0] == "#") {
-            let notes = backendNotes.filter((note) =>
-                note.tags.includes(term.substr(1).toLowerCase())
+            let notes = JSON.parse(localStorage.getItem("notes")).filter(
+                (note) => note.tags.includes(term.substr(1).toLowerCase())
             );
-            setNotes(notes);
+            dispatch({ type: "set-notes", notes: notes });
         } else {
-            let notes = backendNotes.filter((note) =>
-                note.title.toLowerCase().includes(term.toLowerCase())
+            let notes = JSON.parse(localStorage.getItem("notes")).filter(
+                (note) => note.title.toLowerCase().includes(term.toLowerCase())
             );
-            setNotes(notes);
+            dispatch({ type: "set-notes", notes: notes });
         }
     };
 
-    const editHandler = (noteName) => {
-        const note = notes.find((note) => note.title === noteName);
-        dispatchEditor({ type: "open", note: note });
+    const editHandler = (note) => {
+        dispatch({ type: "open", note: note });
 
         // for (let i = 0; i < notes.length; i++) {
         //     if (notes[i].title === noteName) {
@@ -108,9 +91,9 @@ export default function NotesBrowser() {
                     {loading ? (
                         <p>Loading</p>
                     ) : (
-                        notes.map((note) => (
+                        state.notes.map((note) => (
                             <NoteCard
-                                onEdit={editHandler}
+                                onEdit={() => editHandler(note)}
                                 {...note}
                                 key={note.title}
                             />
@@ -118,8 +101,8 @@ export default function NotesBrowser() {
                     )}
                 </div>
             </div>
-            {editor.active ? (
-                <EditNotePanel note={editor.note} onClose={dispatchEditor} />
+            {state.active ? (
+                <EditNotePanel note={state.note} dispatch={dispatch} />
             ) : null}
         </div>
     );

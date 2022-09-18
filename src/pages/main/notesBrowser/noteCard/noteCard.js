@@ -18,11 +18,13 @@ export default function NoteCard(props) {
                 <button
                     className="btn btn-sm btn-primary"
                     style={{ marginRight: "20px" }}
-                    onClick={() => props.onEdit(props.title)}
+                    onClick={() => props.onEdit()}
                 >
                     Edit
                 </button>
-                <span>{`#${props.tags.join(" #")}`}</span>
+                <span>
+                    {props.tags.length != 0 ? `#${props.tags.join(" #")}` : ""}
+                </span>
             </div>
             <div className={`card-body`}>
                 <div className={`card-title`} style={{ fontSize: "1.2rem" }}>
