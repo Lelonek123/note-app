@@ -1,12 +1,17 @@
 import React from "react";
-import style from "./notesBrowser.module.css";
+import style from "./Notes.module.css";
 import NoteCard from "./noteCard/noteCard.js";
 import SearchBar from "../../../components/searchBar/searchBar.js";
 import EditNotePanel from "./editNotePanel/editNotePanel.js";
-import { Routes, Route } from "react-router-dom";
 
 const editorReducer = (state, action) => {
     let newState = { ...state };
+    const generateID = () => {
+        return (
+            Math.random().toString(36).substr(2) +
+            Math.random().toString(36).substr(2)
+        );
+    };
 
     switch (action.type) {
         case "set-notes":
@@ -21,27 +26,55 @@ const editorReducer = (state, action) => {
             newState.note = {};
             break;
         case "save-and-close":
-            newState.notes[
-                newState.notes.findIndex((n) => n.title == state.note.title)
-            ] = action.note;
+            const index = newState.notes.findIndex(
+                (n) => n.id == state.note.id
+            );
+            if (index != -1) {
+                newState.notes[index] = action.note;
+            } else {
+                newState.notes.push(action.note);
+            }
             localStorage.setItem("notes", JSON.stringify(newState.notes));
             newState.note = {};
             newState.active = false;
+            break;
+        case "new-note":
+            console.log("new note");
+            newState.active = true;
+            newState.note = {
+                id: generateID(),
+                title: "",
+                content: "",
+                tags: [],
+            };
+            localStorage.setItem("notes", JSON.stringify(newState.notes));
             break;
     }
 
     return newState;
 };
 
-export default function NotesBrowser() {
-    const [loading, setLoading] = React.useState(true);
-    const [state, dispatch] = React.useReducer(editorReducer, {
+const editorReducerInit = () => {
+    return {
         active: false,
         note: {},
         notes: [],
-    });
+    };
+};
+
+export default function NotesBrowser() {
+    const [loading, setLoading] = React.useState(true);
+    const [state, dispatch] = React.useReducer(
+        editorReducer,
+        {},
+        editorReducerInit
+    );
 
     React.useEffect(() => {
+        let notes = localStorage.getItem("notes");
+        if (notes === null) {
+            localStorage.setItem("notes", JSON.stringify([]));
+        }
         dispatch({
             type: "set-notes",
             notes: JSON.parse(localStorage.getItem("notes")),
@@ -68,23 +101,16 @@ export default function NotesBrowser() {
         }
     };
 
-    const editHandler = (note) => {
-        dispatch({ type: "open", note: note });
-
-        // for (let i = 0; i < notes.length; i++) {
-        //     if (notes[i].title === noteName) {
-        //         setEditor({
-        //             active: true,
-        //             note: notes[i]
-        //         })
-        //     }
-        // }
-    };
-
     return (
         <div className={`${style.wrapper}`}>
             <header>
                 <SearchBar onClickHandler={SearchHandler} />
+                <button
+                    className={`btn btn-primary`}
+                    onClick={() => dispatch({ type: "new-note" })}
+                >
+                    New Note
+                </button>
             </header>
             <div className={`${style.notesContainer}`}>
                 <div className={`row justify-content-around`}>
@@ -93,9 +119,11 @@ export default function NotesBrowser() {
                     ) : (
                         state.notes.map((note) => (
                             <NoteCard
-                                onEdit={() => editHandler(note)}
+                                onEdit={() =>
+                                    dispatch({ type: "open", note: note })
+                                }
                                 {...note}
-                                key={note.title}
+                                key={note.id}
                             />
                         ))
                     )}
