@@ -1,21 +1,9 @@
-import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MainPage from './pages/main/main.js';
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import NoteApp from "./apps/noteApp/noteApp.js";
 
 function App() {
-    const routes = (
-        <Routes>
-            <Route path='/*' element={
-                <MainPage />
-            } />                
-        </Routes>
-    )
-
-    return (
-        <Router>
-            {routes}
-        </Router>
-    )
+    return <NoteApp />;
 }
 
 export default App;
