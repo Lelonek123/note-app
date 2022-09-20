@@ -48,7 +48,6 @@ export function editorReducer(state, action) {
             const removeIndex = newState.notes.findIndex(
                 (n) => n.id === action.id
             );
-            console.log(removeIndex);
             if (removeIndex != -1) {
                 newState.notes.splice(removeIndex, 1);
             }

@@ -7,7 +7,7 @@ export default function Tagbar(props) {
     const addTagHandler = (e) => {
         if (e.key == "Enter") {
             let newTags = props.tags;
-            newTags.push(e.target.value);
+            newTags.push(e.target.value.replace(" ", "_").toLowerCase());
             props.setTags(newTags);
             setAddTagActive(false);
         } else if (e.key == "Escape") {

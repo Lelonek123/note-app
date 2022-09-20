@@ -1,3 +1,7 @@
+:root {
+    --backgroundWhite: hsl(0, 0%, 94%);
+}
+
 .wrapper {
     height: 100%;
     width: 100%;
@@ -8,9 +12,16 @@
 header {
     height: 65px;
     width: 100%;
-    background-color: darkgrey;
-    border-left: 1px solid hsl(0, 0%, 50%);
-    flex-shrink: 0;
+    background-color: var(--backgroundWhite);
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    border-bottom: 1px solid hsl(0, 0%, 70%);
+}
+
+header > button {
+    margin: 0 10px;
+    white-space: nowrap;
 }
 
 .notesContainer {

@@ -50,7 +50,10 @@ export default function NotesBrowser() {
     return (
         <div className={`${style.wrapper}`}>
             <header>
-                <SearchBar onClickHandler={SearchHandler} />
+                <SearchBar
+                    onClickHandler={SearchHandler}
+                    className={style.searchBar}
+                />
                 <button
                     className={`btn btn-primary`}
                     onClick={() => dispatch({ type: "new-note" })}
