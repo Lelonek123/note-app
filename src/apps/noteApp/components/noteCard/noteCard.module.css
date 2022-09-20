@@ -11,3 +11,16 @@
 #cardTitle {
     font-size: 1.2rem;
 }
+
+.cardHeader {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.tags {
+    margin-right: 10px;
+    white-space: nowrap;
+    max-height: 50px;
+    flex-grow: 1;
+    overflow-x: auto;
+}

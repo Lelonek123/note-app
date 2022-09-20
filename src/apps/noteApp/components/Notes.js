@@ -3,64 +3,10 @@ import style from "./Notes.module.css";
 import NoteCard from "./noteCard/noteCard.js";
 import SearchBar from "../../../components/searchBar/searchBar.js";
 import EditNotePanel from "./editNotePanel/editNotePanel.js";
-
-const editorReducer = (state, action) => {
-    let newState = { ...state };
-    const generateID = () => {
-        return (
-            Math.random().toString(36).substr(2) +
-            Math.random().toString(36).substr(2)
-        );
-    };
-
-    switch (action.type) {
-        case "set-notes":
-            newState.notes = action.notes;
-            break;
-        case "open":
-            newState.active = true;
-            newState.note = action.note;
-            break;
-        case "close":
-            newState.active = false;
-            newState.note = {};
-            break;
-        case "save-and-close":
-            const index = newState.notes.findIndex(
-                (n) => n.id == state.note.id
-            );
-            if (index != -1) {
-                newState.notes[index] = action.note;
-            } else {
-                newState.notes.push(action.note);
-            }
-            localStorage.setItem("notes", JSON.stringify(newState.notes));
-            newState.note = {};
-            newState.active = false;
-            break;
-        case "new-note":
-            console.log("new note");
-            newState.active = true;
-            newState.note = {
-                id: generateID(),
-                title: "",
-                content: "",
-                tags: [],
-            };
-            localStorage.setItem("notes", JSON.stringify(newState.notes));
-            break;
-    }
-
-    return newState;
-};
-
-const editorReducerInit = () => {
-    return {
-        active: false,
-        note: {},
-        notes: [],
-    };
-};
+import {
+    editorReducer,
+    editorReducerInit,
+} from "./editorReducer/editorReducer.js";
 
 export default function NotesBrowser() {
     const [loading, setLoading] = React.useState(true);
@@ -121,6 +67,9 @@ export default function NotesBrowser() {
                             <NoteCard
                                 onEdit={() =>
                                     dispatch({ type: "open", note: note })
+                                }
+                                onDelete={(id) =>
+                                    dispatch({ type: "delete-note", id: id })
                                 }
                                 {...note}
                                 key={note.id}
