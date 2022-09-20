@@ -7,11 +7,14 @@
     padding: 0;
     margin: 0 10px 20px 10px;
     cursor: pointer;
+    transition-duration: 100ms;
 }
 
 #card:hover {
-    outline: 3px solid hsl(0, 0%, 70%);
+    box-shadow: 4px 4px hsl(0, 0%, 50%);
     outline-offset: -1px;
+    transform: translate(-4px, -4px);
+    transition-duration: 100ms;
 }
 
 #cardTitle {
