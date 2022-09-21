@@ -10,6 +10,7 @@
     flex-direction: column;
     align-items: stretch;
     padding: 8px 0 8px 0;
+    transition-duration: 160ms;
 }
 
 .headerTitle {
@@ -29,6 +30,16 @@
     justify-content: start;
 }
 
+.sidebarLink > :not(svg) {
+    color: hsla(0, 0%, 0%, 0);
+}
+
+.sidebar.active .sidebarLink > :not(svg) {
+    color: white;
+    transition-delay: 100ms;
+    transition-duration: 250ms;
+}
+
 .sidebarLink > svg {
     height: 26px;
     width: 26px;
@@ -44,6 +55,7 @@
 
 .sidebar.active {
     width: 250px;
+    transition-duration: 160ms;
 }
 
 .menuButtonImg {

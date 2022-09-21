@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./noteCard.module.css";
-import DeletePrompt from "./deletePrompt/DeletePrompt.js";
+import YesNoPrompt from "../yesNoPrompt/YesNoPrompt.js";
 
 export default function NoteCard(props) {
     const [deletePromptActive, setDeletePromptActive] = React.useState(false);
@@ -46,7 +46,8 @@ export default function NoteCard(props) {
                 </div>
             </div>
             {deletePromptActive ? (
-                <DeletePrompt
+                <YesNoPrompt
+                    message="Are you sure you want to delete this note?"
                     onYes={(e) => {
                         e.stopPropagation();
                         props.onDelete(props.id);

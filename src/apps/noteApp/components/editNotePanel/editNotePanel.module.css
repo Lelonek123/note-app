@@ -1,3 +1,8 @@
+:root {
+    --open-animation-time-wrapper: 100ms;
+    --open-animation-time-card: 200ms;
+}
+
 .fullScreen {
     position: absolute;
     top: 0;
@@ -7,12 +12,30 @@
     background-color: hsla(0, 0%, 10%, 0.5);
     display: flex;
     justify-content: center;
+    transition-duration: var(--open-animation-time-wrapper);
+    opacity: 0;
+    transition-delay: 50ms;
+}
+
+.fullScreen.active {
+    opacity: 1;
+    transition-duration: var(--open-animation-time-wrapper);
+    transition-delay: 0ms;
 }
 
 .container {
+    opacity: 0;
     margin: 40px 0;
     width: min(800px, 90%);
+    transition-duration: var(--open-animation-time-card);
+    transition-delay: 0ms;
+}
+
+.container.active {
+    opacity: 1;
+    transition-duration: var(--open-animation-time-card);
     background-color: white;
+    transition-delay: 50ms;
 }
 
 .titleInput {
