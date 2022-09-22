@@ -1,12 +1,13 @@
-import React from 'react';
+import React from "react";
+import style from "./searchBar.module.css";
 
 export default function SearchBar(props) {
     const [term, setTerm] = React.useState("");
 
-
     return (
-        <>
-            <input type="text"
+        <div className={style.wrapper}>
+            <input
+                type="text"
                 placeholder="Search..."
                 value={term}
                 onChange={(e) => {
@@ -19,16 +20,16 @@ export default function SearchBar(props) {
                     }
                 }}
             />
-            <button 
+            <button
                 type="button"
                 className="btn btn-primary"
                 onClick={() => {
-                    props.onClickHandler(term)
+                    props.onClickHandler(term);
                     setTerm("");
                 }}
             >
                 Search
             </button>
-        </>
-    )
+        </div>
+    );
 }

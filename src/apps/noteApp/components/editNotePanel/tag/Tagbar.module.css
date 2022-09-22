@@ -5,6 +5,7 @@
     align-items: center;
     padding: 4px 20px 5px 10px;
     margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 .tag > .removeTagButton {
@@ -30,9 +31,24 @@
     cursor: pointer;
     align-items: center;
     justify-content: center;
+    margin-bottom: 5px;
 }
 
 .addTagButton > svg {
     height: 26px;
     width: 26px;
+}
+
+.tagInput {
+    margin: 0 10px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+
+.tagInput > input {
+    height: 100%;
+}
+
+.tagInput > input:focus {
+    border: none;
 }

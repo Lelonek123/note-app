@@ -21,7 +21,7 @@ export function editorReducer(state, action) {
             newState.active = false;
             newState.note = {};
             break;
-        case "save-and-close":
+        case "save":
             const saveIndex = newState.notes.findIndex(
                 (n) => n.id == state.note.id
             );
@@ -31,8 +31,6 @@ export function editorReducer(state, action) {
                 newState.notes.push(action.note);
             }
             localStorage.setItem("notes", JSON.stringify(newState.notes));
-            newState.note = {};
-            newState.active = false;
             break;
         case "new-note":
             newState.active = true;
@@ -48,7 +46,6 @@ export function editorReducer(state, action) {
             const removeIndex = newState.notes.findIndex(
                 (n) => n.id === action.id
             );
-            console.log(removeIndex);
             if (removeIndex != -1) {
                 newState.notes.splice(removeIndex, 1);
             }

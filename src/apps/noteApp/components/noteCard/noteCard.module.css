@@ -1,11 +1,37 @@
 /*grid, auto-fill minmax*/
 
+:root {
+    --open-animation-duration: 200ms;
+}
+
+.wrapper {
+    transition-duration: var(--open-animation-duration);
+}
+
+.wrapper.active {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: hsla(0, 0%, 0%, 0.2);
+    transition-duration: var(--open-animation-duration);
+}
+
 #card {
-    width: 350px;
-    height: 200px;
+    height: 250px;
     overflow: hidden;
     padding: 0;
     margin: 0 10px 20px 10px;
+    cursor: pointer;
+    transition-duration: var(--open-animation-duration);
+}
+
+#card:hover {
+    box-shadow: 3px 3px 7px hsl(0, 0%, 60%);
+    outline-offset: -1px;
+    transform: translate(-3px, -3px);
+    transition-duration: 100ms;
 }
 
 #cardTitle {
@@ -22,5 +48,12 @@
     white-space: nowrap;
     max-height: 50px;
     flex-grow: 1;
-    overflow-x: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.deleteButton {
+    aspect-ratio: 1 / 1;
+    display: flex !important;
+    align-items: center;
 }
