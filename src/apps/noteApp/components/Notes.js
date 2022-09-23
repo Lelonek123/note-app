@@ -7,46 +7,65 @@ import {
     editorReducer,
     editorReducerInit,
 } from "./editorReducer/editorReducer.js";
+import { db, auth } from "../../../firebase.js";
+import {
+    getDoc,
+    doc,
+    where,
+    query,
+    collection,
+    getDocs,
+} from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function NotesBrowser() {
-    const [loading, setLoading] = React.useState(true);
+    const [user, loading, error] = useAuthState(auth);
     const [state, dispatch] = React.useReducer(
         editorReducer,
         {},
         editorReducerInit
     );
+    const navigate = useNavigate();
+
+    const fetchNotes = async () => {
+        try {
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
+            const firestoreObject = docSnap.data();
+            dispatch({ type: "set-notes", notes: firestoreObject.notes });
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     React.useEffect(() => {
-        let notes = localStorage.getItem("notes");
-        if (notes === null) {
-            localStorage.setItem("notes", JSON.stringify([]));
+        if (!user) {
+            navigate("/login");
+            return;
         }
-        dispatch({
-            type: "set-notes",
-            notes: JSON.parse(localStorage.getItem("notes")),
-        });
-        setLoading(false);
+        dispatch({ type: "set-user", uid: user.uid });
+        fetchNotes();
     }, []);
 
     const SearchHandler = (term) => {
         if (term == "") {
             dispatch({
-                type: "set-notes",
-                notes: JSON.parse(localStorage.getItem("notes")),
+                type: "filter-notes",
+                notes: state.notes,
             });
         } else if (term[0] == "#") {
-            let notes = JSON.parse(localStorage.getItem("notes")).filter(
-                (note) =>
-                    note.tags.includes(
-                        term.substr(1).toLowerCase().replaceAll(" ", "_")
-                    )
+            let notes = state.notes.filter((note) =>
+                note.tags.includes(
+                    term.substr(1).toLowerCase().replaceAll(" ", "_")
+                )
             );
-            dispatch({ type: "set-notes", notes: notes });
+            dispatch({ type: "filter-notes", notes: notes });
         } else {
-            let notes = JSON.parse(localStorage.getItem("notes")).filter(
-                (note) => note.title.toLowerCase().includes(term.toLowerCase())
+            let notes = state.notes.filter((note) =>
+                note.title.toLowerCase().includes(term.toLowerCase())
             );
-            dispatch({ type: "set-notes", notes: notes });
+            dispatch({ type: "filter-notes", notes: notes });
         }
     };
 
@@ -78,7 +97,7 @@ export default function NotesBrowser() {
                 {loading ? (
                     <p>Loading</p>
                 ) : (
-                    state.notes.map((note) => (
+                    state.filteredNotes.map((note) => (
                         <NoteCard
                             className={`col-2 col-sm-3 col-md-4 col-xl-5`}
                             onEdit={() =>

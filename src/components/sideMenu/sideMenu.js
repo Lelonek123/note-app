@@ -78,7 +78,7 @@ export default function SideMenu(props) {
             <hr style={{ margin: "10px 0" }} />
             <div className={style.sidebarFooter}>
                 <Link
-                    to="/"
+                    to="/profile"
                     className={`btn btn-primary btn-sm ${style.sidebarLink}`}
                 >
                     <svg
@@ -93,7 +93,7 @@ export default function SideMenu(props) {
                         <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12z" />
                     </svg>
                     <div className={style.buttonText}>
-                        {active ? "Your Profile" : ""}
+                        {active ? "Login" : ""}
                     </div>
                 </Link>
             </div>
