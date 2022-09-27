@@ -1,0 +1,75 @@
+:root {
+    --open-animation-time-wrapper: 100ms;
+    --open-animation-time-card: 200ms;
+}
+
+.fullScreen {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: hsla(0, 0%, 10%, 0.5);
+    display: flex;
+    justify-content: center;
+    transition-duration: var(--open-animation-time-wrapper);
+    opacity: 0;
+    transition-delay: 50ms;
+}
+
+.fullScreen.active {
+    opacity: 1;
+    transition-duration: var(--open-animation-time-wrapper);
+    transition-delay: 0ms;
+}
+
+.container {
+    opacity: 0;
+    margin: 40px 0;
+    width: min(800px, 90%);
+    transition-duration: var(--open-animation-time-card);
+    transition-delay: 0ms;
+}
+
+.container.active {
+    opacity: 1;
+    transition-duration: var(--open-animation-time-card);
+    background-color: white;
+    transition-delay: 50ms;
+}
+
+.titleInput {
+    width: 100%;
+    border: none;
+}
+
+.titleInput:focus {
+    outline: none;
+}
+
+.contentInput {
+    width: 100%;
+    height: 100%;
+    border: none;
+    resize: none;
+}
+
+.contentInput:focus {
+    outline: none;
+}
+
+.cardHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cardBody {
+    display: flex;
+    flex-direction: column;
+}
+
+.saveButton {
+    margin-right: 10px;
+}

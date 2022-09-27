@@ -1,0 +1,88 @@
+:root {
+    --background: hsl(0, 0%, 94%);
+}
+
+.sidebar {
+    height: 100vh;
+    background-color: var(--background);
+    width: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 0 8px 0;
+    transition-duration: 160ms;
+}
+
+.headerTitle {
+    margin-left: 10px;
+    font-size: 28px;
+}
+
+.sidebarLink {
+    margin: 3px 8px;
+    height: 44px;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar.active .sidebarLink {
+    justify-content: start;
+}
+
+.sidebarLink > :not(svg) {
+    color: hsla(0, 0%, 0%, 0);
+}
+
+.sidebar.active .sidebarLink > :not(svg) {
+    color: white;
+    transition-delay: 100ms;
+    transition-duration: 250ms;
+}
+
+.sidebarLink > svg {
+    height: 26px;
+    width: 26px;
+}
+
+.sidebar.active .sidebarLink > svg {
+    margin-right: 5px;
+}
+
+.buttonText {
+    font-size: 20px;
+}
+
+.sidebar.active {
+    width: 250px;
+    transition-duration: 160ms;
+}
+
+.menuButtonImg {
+    aspect-ratio: 1 / 1;
+    height: 26px;
+}
+
+.sidebarHeader {
+    height: 56px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    padding-left: 8px;
+}
+
+button {
+    height: fit-content;
+}
+
+.sidebarContent {
+    padding-top: 5px;
+    flex-grow: 1;
+    flex-direction: column;
+    border-top: 1px solid hsl(0, 0%, 70%);
+}
+
+.sidebarContent > * {
+    margin-bottom: 8px;
+}
