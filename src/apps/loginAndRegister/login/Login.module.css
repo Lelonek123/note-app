@@ -1,0 +1,16 @@
+.fullscreen {
+    width: 100vw;
+    height: 100vh;
+    background-color: hsl(0, 0%, 95%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formContainer {
+    min-width: 350px;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid hsl(0, 0%, 85%);
+    border-radius: 10px;
+}
