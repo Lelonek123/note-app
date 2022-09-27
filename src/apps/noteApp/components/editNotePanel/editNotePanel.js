@@ -19,6 +19,7 @@ export default function EditNotePanel(props) {
                     title: title,
                     content: content,
                     tags: tags,
+                    lastEditedTimestamp: Date.now(),
                 },
             });
             setActive(false);
@@ -45,6 +46,7 @@ export default function EditNotePanel(props) {
                     title: title,
                     content: content,
                     tags: tags,
+                    lastEditedTimestamp: Date.now(),
                 },
             });
         }
@@ -98,6 +100,7 @@ export default function EditNotePanel(props) {
                                     title: title,
                                     content: content,
                                     tags: tags,
+                                    lastEditedTimestamp: Date.now(),
                                 },
                             });
                             setActive(false);

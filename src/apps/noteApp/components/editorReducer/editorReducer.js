@@ -64,6 +64,7 @@ export function editorReducer(state, action) {
                 title: "",
                 content: "",
                 tags: [],
+                lastEditedTimestamp: Date.now(),
             };
             break;
         case "delete-note":
