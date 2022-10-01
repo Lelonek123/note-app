@@ -91,7 +91,7 @@ export const editorReducerInit = () => {
         active: false,
         uid: "",
         note: {},
-        notes: [],
+        notes: null,
         filteredNotes: [],
     };
 };

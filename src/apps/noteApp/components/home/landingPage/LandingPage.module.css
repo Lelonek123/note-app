@@ -1,0 +1,14 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 50px 30px;
+}
+
+.innerContainer {
+    background-color: lightgray;
+    width: 100%;
+    max-width: 700px;
+}

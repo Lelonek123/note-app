@@ -19,7 +19,8 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 
-export default function NotesBrowser() {
+export default function NotesBrowser(props) {
+    const [loadingNotes, setLoadingNotes] = React.useState(true);
     const [user, loading, error] = useAuthState(auth);
     const [state, dispatch] = React.useReducer(
         editorReducer,
@@ -34,6 +35,7 @@ export default function NotesBrowser() {
             const docSnap = await getDoc(docRef);
             const firestoreObject = docSnap.data();
             dispatch({ type: "set-notes", notes: firestoreObject.notes });
+            setLoadingNotes(false);
         } catch (err) {
             console.log(err);
         }
@@ -41,11 +43,13 @@ export default function NotesBrowser() {
 
     React.useEffect(() => {
         if (!user) {
-            navigate("/login");
+            navigate("/");
             return;
         }
         dispatch({ type: "set-user", uid: user.uid });
-        fetchNotes();
+        if (state.notes === null) {
+            fetchNotes();
+        }
     }, []);
 
     const SearchHandler = (term) => {
@@ -93,11 +97,14 @@ export default function NotesBrowser() {
                     </svg>
                 </button>
             </header>
-            <div className={`${style.notesContainer}`}>
-                {loading ? (
-                    <p>Loading</p>
-                ) : (
-                    state.filteredNotes.map((note) => (
+            {loadingNotes ? (
+                <div
+                    className={`spinner-border text-secondary ${style.spinner}`}
+                    role="status"
+                ></div>
+            ) : (
+                <div className={`${style.notesContainer}`}>
+                    {state.filteredNotes.map((note) => (
                         <NoteCard
                             className={`col-2 col-sm-3 col-md-4 col-xl-5`}
                             onEdit={() =>
@@ -113,9 +120,9 @@ export default function NotesBrowser() {
                             key={note.id}
                             editor={state.active}
                         />
-                    ))
-                )}
-            </div>
+                    ))}
+                </div>
+            )}
             {state.active ? (
                 <EditNotePanel note={state.note} dispatch={dispatch} />
             ) : null}

@@ -37,12 +37,12 @@ export default function NoteCard(props) {
                         </svg>
                     </button>
                 </div>
-                <div className={`card-body`}>
+                <div className={`card-body pt-1`}>
                     <div className={`card-title`} id={style.cardTitle}>
                         {props.title}
                     </div>
                     <hr style={{ margin: "0" }} />
-                    <div className={`card-text`}>{props.content}</div>
+                    <div className={`card-text pt-1`}>{props.content}</div>
                 </div>
             </div>
             {deletePromptActive ? (

@@ -37,3 +37,7 @@ header > button {
     width: 26px;
     height: 26px;
 }
+
+.spinner {
+    margin: auto;
+}
