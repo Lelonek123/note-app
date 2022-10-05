@@ -35,7 +35,7 @@ export default function EditNotePanel(props) {
         setTags(tags.filter((t) => t != tag));
     };
 
-    const saveShortcutHandler = (e) => {
+    const keyDownHandler = (e) => {
         // ctrl+s detection
         if (e.ctrlKey && e.key === "s") {
             e.preventDefault();
@@ -49,6 +49,21 @@ export default function EditNotePanel(props) {
                     lastEditedTimestamp: Date.now(),
                 },
             });
+        } else if (e.key === "Escape") {
+            if (active) {
+                props.dispatch({
+                    type: "save",
+                    note: {
+                        id: props.note.id,
+                        title: title,
+                        content: content,
+                        tags: tags,
+                        lastEditedTimestamp: Date.now(),
+                    },
+                });
+                setActive(false);
+                setTimeout(() => props.dispatch({ type: "close" }), 300);
+            }
         }
     };
 
@@ -59,7 +74,7 @@ export default function EditNotePanel(props) {
                 className={`card ${style.container} ${
                     active ? style.active : ""
                 }`}
-                onKeyDown={(e) => saveShortcutHandler(e)}
+                onKeyDown={(e) => keyDownHandler(e)}
             >
                 <div className={`card-header ${style.cardHeader}`}>
                     <Tagbar

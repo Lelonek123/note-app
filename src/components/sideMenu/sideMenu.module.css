@@ -11,6 +11,9 @@
     align-items: stretch;
     padding: 8px 0 8px 0;
     transition-duration: 160ms;
+    z-index: 2;
+    position: sticky;
+    top: 0;
 }
 
 .headerTitle {

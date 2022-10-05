@@ -4,7 +4,7 @@
 }
 
 .fullScreen {
-    position: absolute;
+    position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
@@ -15,6 +15,7 @@
     transition-duration: var(--open-animation-time-wrapper);
     opacity: 0;
     transition-delay: 50ms;
+    z-index: 2;
 }
 
 .fullScreen.active {

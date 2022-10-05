@@ -22,7 +22,9 @@ export default function NoteCard(props) {
                         className={`btn btn-sm btn-danger ${style.deleteButton}`}
                         onClick={(e) => {
                             e.stopPropagation();
-                            setDeletePromptActive(true);
+                            if (props.deleteButtonActive) {
+                                setDeletePromptActive(true);
+                            }
                         }}
                     >
                         <svg

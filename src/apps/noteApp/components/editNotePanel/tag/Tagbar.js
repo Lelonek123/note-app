@@ -11,6 +11,7 @@ export default function Tagbar(props) {
             props.setTags(newTags);
             setAddTagActive(false);
         } else if (e.key == "Escape") {
+            e.stopPropagation();
             setAddTagActive(false);
         }
     };
@@ -23,7 +24,8 @@ export default function Tagbar(props) {
                     <div
                         className={`${style.removeTagButton}`}
                         title="Remove tag"
-                        onClick={() => {
+                        onClick={(e) => {
+                            e.stopPropagation();
                             props.removeTag(tag);
                         }}
                     >

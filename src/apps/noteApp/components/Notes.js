@@ -41,9 +41,9 @@ export default function NotesBrowser(props) {
         }
     };
 
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
         if (!user) {
-            navigate("/");
+            navigate("/login");
             return;
         }
         dispatch({ type: "set-user", uid: user.uid });
@@ -106,7 +106,6 @@ export default function NotesBrowser(props) {
                 <div className={`${style.notesContainer}`}>
                     {state.filteredNotes.map((note) => (
                         <NoteCard
-                            className={`col-2 col-sm-3 col-md-4 col-xl-5`}
                             onEdit={() =>
                                 dispatch({ type: "open", note: note })
                             }
@@ -119,6 +118,7 @@ export default function NotesBrowser(props) {
                             {...note}
                             key={note.id}
                             editor={state.active}
+                            deleteButtonActive={true}
                         />
                     ))}
                 </div>
