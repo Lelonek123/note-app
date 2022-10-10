@@ -92,4 +92,6 @@
     width: 90%;
     color: whitesmoke;
     font-size: 17px;
+    text-align: justify;
+    text-justify: inter-word;
 }

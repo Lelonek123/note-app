@@ -67,14 +67,14 @@ export default function LandingPage(props) {
                     </div>
                     <div className={`${style.loginButtonsContainer}`}>
                         <Link
-                            className={`btn btn-dark ${style.button}`}
+                            className={`btn btn-light ${style.button}`}
                             to="/register"
                         >
                             Register and save
                         </Link>
                         <p>or</p>
                         <Link
-                            className={`btn btn-dark ${style.button}`}
+                            className={`btn btn-light ${style.button}`}
                             to="/login"
                         >
                             LogIn
@@ -84,10 +84,10 @@ export default function LandingPage(props) {
                         <p>
                             {`This is a simple note taking app. Click the demo
                             card above to try it out. You can create
-                            online account, save your notes in cloud and acces
+                            online account, save your notes in the cloud and acces
                             them from different devices. It was build using
-                            front end JS freamwork React, styling was done in 
-                            vanilla css and Bootstrap. Backend is powered by
+                            React - frontend JS freamwork, styling was done in 
+                            vanilla CSS and Bootstrap. Backend is powered by
                             Firebase.`}
                         </p>
                     </div>
