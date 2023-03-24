@@ -1,6 +1,7 @@
 .fullScreenContainer {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
+    height: fit-content;
     background-color: black;
     display: flex;
     flex-direction: row;
@@ -8,7 +9,9 @@
 
 .content {
     background-color: hsl(0, 0%, 92%);
+    min-height: 100vh;
     height: 100%;
     width: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
 }

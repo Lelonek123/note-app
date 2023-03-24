@@ -22,7 +22,9 @@ export default function NoteCard(props) {
                         className={`btn btn-sm btn-danger ${style.deleteButton}`}
                         onClick={(e) => {
                             e.stopPropagation();
-                            setDeletePromptActive(true);
+                            if (props.deleteButtonActive) {
+                                setDeletePromptActive(true);
+                            }
                         }}
                     >
                         <svg
@@ -37,12 +39,12 @@ export default function NoteCard(props) {
                         </svg>
                     </button>
                 </div>
-                <div className={`card-body`}>
+                <div className={`card-body pt-1`}>
                     <div className={`card-title`} id={style.cardTitle}>
                         {props.title}
                     </div>
                     <hr style={{ margin: "0" }} />
-                    <div className={`card-text`}>{props.content}</div>
+                    <div className={`card-text pt-1`}>{props.content}</div>
                 </div>
             </div>
             {deletePromptActive ? (
