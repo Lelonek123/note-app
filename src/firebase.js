@@ -20,17 +20,20 @@ import {
     doc,
 } from "firebase/firestore";
 
+const exampleNote = {
+    id: "example",
+    title: "Example note",
+    content: "Example content...",
+    tags: ["ExampleTag"],
+    timestamp: Date.now(),
+};
+
 const firebaseConfig = {
     apiKey: "AIzaSyDQlTw9EwHh1DJ5Thr6s2ApaD5MWDQeRCI",
-
     authDomain: "noote-app.firebaseapp.com",
-
     projectId: "noote-app",
-
     storageBucket: "noote-app.appspot.com",
-
     messagingSenderId: "1097144420656",
-
     appId: "1:1097144420656:web:d98437b122c8857c8660f5",
 };
 
@@ -52,20 +55,13 @@ const registerWithEmailAndPassword = async (username, email, password) => {
         const res = await createUserWithEmailAndPassword(auth, email, password);
         const user = res.user;
         await updateProfile(user, { displayName: username });
+        let note = JSON.parse(window.sessionStorage.getItem("note"));
         await setDoc(doc(db, "users", user.uid), {
             uid: user.uid,
             display_name: username,
             authProvider: "local",
             email,
-            notes: [
-                {
-                    id: user.uid,
-                    title: "Example note",
-                    content: "Example content...",
-                    tags: ["ExampleTag"],
-                    timestamp: Date.now(),
-                },
-            ],
+            notes: [note !== null ? note : exampleNote],
         });
     } catch (err) {
         console.error(err);

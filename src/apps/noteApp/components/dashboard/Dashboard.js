@@ -17,7 +17,14 @@ export default function Dashboard(props) {
         <>
             {user ? (
                 <>
-                    <button onClick={logout}>LogOut</button>
+                    <button
+                        onClick={() => {
+                            logout();
+                            navigate("/");
+                        }}
+                    >
+                        LogOut
+                    </button>
                 </>
             ) : null}
         </>

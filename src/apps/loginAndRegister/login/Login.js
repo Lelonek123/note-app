@@ -49,25 +49,6 @@ export default function Login(props) {
                     </label>
                 </div>
                 <div className="row mb-4">
-                    <div className="col d-flex justify-content-center">
-                        <div className="form-check">
-                            <input
-                                className="form-check-input"
-                                type="checkbox"
-                                value=""
-                                id="remember"
-                                checked
-                                readOnly
-                            />
-                            <label
-                                className="form-check-label"
-                                htmlFor="remember"
-                            >
-                                {" "}
-                                Remember me{" "}
-                            </label>
-                        </div>
-                    </div>
                     <div className="col">
                         <Link to="/reset">Forgot password?</Link>
                     </div>
